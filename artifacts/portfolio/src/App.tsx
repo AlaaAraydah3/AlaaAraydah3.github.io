@@ -325,14 +325,14 @@ function Portfolio() {
       <main className="max-w-5xl mx-auto px-6 pt-40 pb-32 space-y-40 relative z-10">
         
         {/* HERO SECTION */}
-        <section id="home" className="min-h-[60vh] flex flex-col justify-center relative">
-          <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-[128px] pointer-events-none" />
+        <section id="home" className="min-h-[60vh] flex flex-col justify-center items-center text-center relative">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-[128px] pointer-events-none" />
           
           <motion.div
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className="space-y-8 relative z-10 max-w-3xl"
+            className="space-y-8 relative z-10 max-w-3xl flex flex-col items-center"
           >
             <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-mono font-medium">
               <span className="relative flex h-2 w-2">
