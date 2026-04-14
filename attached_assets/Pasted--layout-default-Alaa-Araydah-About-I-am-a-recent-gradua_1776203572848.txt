@@ -1,0 +1,126 @@
+---
+layout: default
+---
+
+# Alaa Araydah
+
+## About
+
+I am a recent graduate in [Electronic Engineering] from [Yarmouk University] in Jordan. I am building expertise in applied AI and ML systems through the AI.SPIRE program. I am most interested in [NLP, computer vision, data engineering].
+
+---
+
+## Projects
+
+### Foundations
+
+**Git, Environment Setup & Collaboration**
+
+- **Environment & Git Workflows** — Set up a reproducible Python development environment and practiced branching, merging, and pull request workflows.
+  - Repo: [https://github.com/LevelUp-Applied-AI/m1-l1-git-workflows-AlaaAraydah3](#)
+  - Skills: Git, GitHub, VS Code, virtual environments, branch management
+
+- **Team Collaboration Pipeline** — Collaborated on a shared repository using feature branches and code review, resolving merge conflicts and maintaining a clean commit history.
+  - Repo: [https://github.com/LevelUp-Applied-AI/m1-d1-git-workflows-AlaaAraydah3](#)
+  - Skills: Git collaboration, pull requests, code review, merge conflict resolution
+
+**Data Pipelines & PyTorch Fundamentals**
+
+- **Data Pipeline** — Built an end-to-end data loading and preprocessing pipeline using pandas, with validation checks and reproducible outputs.
+  - Repo: [https://github.com/LevelUp-Applied-AI/m2-l2-data-pipeline-AlaaAraydah3](#)
+  - Skills: Python, pandas, data cleaning, pipeline design
+
+- **PyTorch Model** — Implemented a neural network training loop in PyTorch, including data loading, forward/backward passes, and evaluation metrics.
+  - Repo: [https://github.com/LevelUp-Applied-AI/m2-i2-pytorch-AlaaAraydah3](#)
+  - Skills: PyTorch, tensor operations, training loops, model evaluation
+
+**Relational Databases & SQL**
+
+- ** SQL fundamentals ** — Queried and analyzed relational data using PostgreSQL, including joins and aggregations
+  - Repo: [https://github.com/LevelUp-Applied-AI/m3-d3-sql-fundamentals-AlaaAraydah3](#)
+  - Skills: SQL, PostgreSQL, data modeling
+ 
+- **ETL Pipeline** —  Built an ETL pipeline to extract, transform, validate, and load customer data into PostgreSQL and CSV outputs
+  - Repo: [https://github.com/LevelUp-Applied-AI/m3-i3-etl-pipeline-AlaaAraydah3](#)
+  - Skills: SQL, data validation, Data Aggregation, Data Cleaning
+
+**Data Visualization & Communication**
+
+- **KPI Dashboard** —  Developed a KPI dashboard to analyze revenue, customer behavior, and trends using visualizations
+  - Repo: [https://github.com/LevelUp-Applied-AI/m4-i4-kpi-dashboard-AlaaAraydah3](#)
+  - Skills: Matplotlib, data storytelling, Design Performance Indicator (KPI)
+   
+- **Descriptive Analytics** —  Performed exploratory data analysis and statistical testing to extract insights from datasets
+  - Repo: [https://github.com/LevelUp-Applied-AI/m4-l4-descriptive-analytics-AlaaAraydah3](#)
+  - Skills: Matplotlib, Hypothesis testing, data analysis, visualization
+
+---
+
+### Machine Learning & NLP
+
+**Machine Learning Fundamentals**
+
+- **Project Name** — One sentence describing what you built.
+  - Repo: [link](#)
+  - Skills: scikit-learn, model evaluation
+
+**Natural Language Processing**
+
+- **Project Name** — One sentence describing what you built.
+  - Repo: [link](#)
+  - Skills: spaCy, text preprocessing, NLP pipelines
+
+**Deep Learning for NLP**
+
+- **Project Name** — One sentence describing what you built.
+  - Repo: [link](#)
+  - Skills: PyTorch, Hugging Face, transformers
+
+---
+
+### Retrieval & Knowledge Graphs
+
+**Retrieval-Augmented Generation**
+
+- **Project Name** — One sentence describing what you built.
+  - Repo: [link](#)
+  - Skills: Weaviate, RAG pipelines, embeddings
+  - [Read more](projects/sample-project.md) *(optional -- use for projects complex enough to warrant a detail page)*
+
+**Knowledge Graphs**
+
+- **Project Name** — One sentence describing what you built.
+  - Repo: [link](#)
+  - Skills: Triple stores, SPARQL, knowledge representation
+
+---
+
+### Deployment
+
+**API Development & Containerization**
+
+- **Project Name** — One sentence describing what you built.
+  - Repo: [link](#)
+  - Skills: FastAPI, Docker, deployment
+
+**Monitoring & Production Systems**
+
+- **Project Name** — One sentence describing what you built.
+  - Repo: [link](#)
+  - Skills: Monitoring, logging, production reliability
+
+---
+
+### Capstone
+
+- **Project Name** — One sentence describing your capstone.
+  - Repo: [link](#)
+  - Skills: Full-stack AI/ML system
+
+---
+
+## Contact
+
+- **GitHub:**    [your-github-username](https://github.com/AlaaAraydah3)
+- **LinkedIn:**  [your-linkedin-profile](https://linkedin.com/in/alaa-araydah-278849234)
+- **Email:**     alaaaraydah50@gmail.com
