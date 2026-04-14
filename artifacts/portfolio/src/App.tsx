@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SiGithub } from "react-icons/si";
 import { Mail, ChevronRight, Code2, Database, Box, Server, Bot, ExternalLink, Linkedin, Menu, X, ArrowRight, Phone } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -199,6 +198,73 @@ const projectCategories = [
     ]
   }
 ];
+
+type Project = { title: string; description: string; link: string; tags: string[] };
+
+function ProjectCard({ project }: { project: Project }) {
+  const [clicked, setClicked] = useState(false);
+  const isComingSoon = project.title === "Coming Soon";
+
+  return (
+    <motion.div
+      whileTap={isComingSoon ? {} : { scale: 0.97, y: -6 }}
+      onClick={() => { if (!isComingSoon) setClicked(c => !c); }}
+      className={`flex flex-col border rounded-xl transition-colors duration-300 cursor-pointer relative overflow-hidden group
+        ${isComingSoon
+          ? "opacity-60 grayscale-[0.5] border-white/10 bg-card/80 cursor-default"
+          : clicked
+            ? "border-primary/60 bg-primary/15 shadow-lg shadow-primary/20"
+            : "border-white/10 bg-card/80 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
+        }`}
+      data-testid={`card-project-${project.title}`}
+    >
+      {!isComingSoon && (
+        <div className={`absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none transition-opacity duration-300 ${clicked ? "opacity-100" : "opacity-0 group-hover:opacity-60"}`} />
+      )}
+
+      <div className="pb-4 relative z-10 p-6 pb-2">
+        <div className={`text-base font-semibold mb-2 ${isComingSoon ? "text-muted-foreground font-medium" : "text-foreground"}`}>
+          {project.title}
+        </div>
+        <div className="text-sm leading-relaxed text-muted-foreground/80 min-h-[3rem]">
+          {project.description}
+        </div>
+      </div>
+
+      <div className="pb-4 flex-grow relative z-10 px-6">
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <Badge
+              key={tag}
+              variant="secondary"
+              className={`font-mono text-xs font-normal py-1 ${isComingSoon ? "bg-white/5 text-muted-foreground" : clicked ? "bg-primary/20 text-primary border-primary/30" : "bg-primary/10 text-primary border-primary/20"}`}
+              data-testid={`badge-tag-${tag}`}
+            >
+              {tag}
+            </Badge>
+          ))}
+        </div>
+      </div>
+
+      {project.link !== "#" && !isComingSoon && (
+        <div className="pt-0 pb-5 relative z-10 mt-auto px-6">
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={e => e.stopPropagation()}
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-2 group/link"
+            data-testid={`link-github-${project.title}`}
+          >
+            <SiGithub className="w-4 h-4" />
+            <span>View Repository</span>
+            <ExternalLink className="w-3 h-3 opacity-50 group-hover/link:opacity-100 transition-opacity group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+          </a>
+        </div>
+      )}
+    </motion.div>
+  );
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -461,61 +527,9 @@ function Portfolio() {
                             </h5>
                             
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                              {sub.projects.map((project) => {
-                                const isComingSoon = project.title === "Coming Soon";
-                                
-                                return (
-                                  <Card
-                                    key={project.title}
-                                    className={`flex flex-col border border-white/10 bg-card/80 transition-all duration-300 ${isComingSoon ? 'opacity-60 grayscale-[0.5]' : 'hover:border-primary/40 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5'} relative overflow-hidden group`}
-                                    data-testid={`card-project-${project.title}`}
-                                  >
-                                    {!isComingSoon && (
-                                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                                    )}
-                                    
-                                    <CardHeader className="pb-4 relative z-10">
-                                      <CardTitle className={`text-xl ${isComingSoon ? 'text-muted-foreground font-medium' : 'text-foreground'}`}>
-                                        {project.title}
-                                      </CardTitle>
-                                      <CardDescription className="text-sm leading-relaxed text-muted-foreground/80 pt-2 min-h-[3rem]">
-                                        {project.description}
-                                      </CardDescription>
-                                    </CardHeader>
-                                    
-                                    <CardContent className="pb-4 flex-grow relative z-10">
-                                      <div className="flex flex-wrap gap-2">
-                                        {project.tags.map((tag) => (
-                                          <Badge
-                                            key={tag}
-                                            variant="secondary"
-                                            className={`font-mono text-xs font-normal py-1 ${isComingSoon ? 'bg-white/5 text-muted-foreground' : 'bg-primary/10 text-primary border-primary/20'}`}
-                                            data-testid={`badge-tag-${tag}`}
-                                          >
-                                            {tag}
-                                          </Badge>
-                                        ))}
-                                      </div>
-                                    </CardContent>
-                                    
-                                    {project.link !== "#" && !isComingSoon && (
-                                      <CardFooter className="pt-0 pb-5 relative z-10 mt-auto">
-                                        <a
-                                          href={project.link}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-sm font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-2 group/link"
-                                          data-testid={`link-github-${project.title}`}
-                                        >
-                                          <SiGithub className="w-4 h-4" />
-                                          <span>View Repository</span>
-                                          <ExternalLink className="w-3 h-3 opacity-50 group-hover/link:opacity-100 transition-opacity group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                                        </a>
-                                      </CardFooter>
-                                    )}
-                                  </Card>
-                                );
-                              })}
+                              {sub.projects.map((project) => (
+                                <ProjectCard key={project.title} project={project} />
+                              ))}
                             </div>
                           </div>
                         ))}
