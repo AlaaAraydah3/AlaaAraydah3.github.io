@@ -344,7 +344,7 @@ function Portfolio() {
             
             <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1]">
               Alaa Araydah
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500 mt-2">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500 mt-2 text-4xl md:text-5xl">
                 AI/ML Engineering.
               </span>
             </motion.h1>
