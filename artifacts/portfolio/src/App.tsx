@@ -465,7 +465,19 @@ function Portfolio() {
         </section>
 
         {/* PROJECTS SECTION */}
-        <section id="projects" className="scroll-m-24 space-y-10 flex flex-col items-center text-center">
+        <section id="projects" className="scroll-m-24">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="border border-white/10 rounded-2xl bg-card/40 backdrop-blur-sm p-8 space-y-8"
+        >
+          <div className="text-center space-y-2">
+            <h3 className="text-3xl font-bold tracking-tight">Projects</h3>
+            <div className="h-1 w-12 bg-primary rounded-full mx-auto" />
+          </div>
+        <div className="space-y-10 flex flex-col items-center text-center">
 
           {/* Category Grid — 2 / 2 / 1 */}
           <motion.div
@@ -573,51 +585,48 @@ function Portfolio() {
               })}
             </AnimatePresence>
           </div>
+        </div>
+        </motion.div>
         </section>
 
         {/* CONTACT SECTION */}
-        <section id="contact" className="scroll-m-24 pb-12 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 rounded-3xl -z-10 pointer-events-none" />
-          
+        <section id="contact" className="scroll-m-24 pb-12">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="max-w-3xl mx-auto text-center space-y-10 py-16 px-6 border border-white/5 rounded-3xl bg-card/30 backdrop-blur-sm"
+            className="max-w-3xl mx-auto text-center space-y-8 py-16 px-6 border border-white/10 rounded-2xl bg-card/40 backdrop-blur-sm"
           >
-            <div className="space-y-4">
-              <h3 className="text-4xl font-extrabold tracking-tight">Let's Connect</h3>
-              <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-                Open to discussing AI/ML projects, collaboration, or opportunities in the field.
-              </p>
+            <div className="space-y-2">
+              <h3 className="text-3xl font-bold tracking-tight">Let's Connect</h3>
+              <div className="h-1 w-12 bg-primary rounded-full mx-auto" />
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-              <Button asChild size="lg" className="h-14 px-8 gap-3 text-base" data-testid="button-email">
-                <a href="mailto:alaaaraydah50@gmail.com">
-                  <Mail className="w-5 h-5" />
-                  Email Me
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="h-14 px-8 gap-3 text-base border-white/10 hover:bg-white/5" data-testid="button-github">
-                <a href="https://github.com/AlaaAraydah3" target="_blank" rel="noopener noreferrer">
-                  <SiGithub className="w-5 h-5" />
-                  GitHub
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="h-14 px-8 gap-3 text-base border-white/10 hover:bg-white/5" data-testid="button-linkedin">
-                <a href="https://linkedin.com/in/alaa-araydah-278849234" target="_blank" rel="noopener noreferrer">
-                  <Linkedin className="w-5 h-5" />
-                  LinkedIn
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="h-14 px-8 gap-3 text-base border-white/10 hover:bg-white/5" data-testid="button-phone">
-                <a href="tel:+00962770439648">
-                  <Phone className="w-5 h-5" />
-                  +962 77 043 9648
-                </a>
-              </Button>
+            <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
+              {[
+                { label: "Email Me", icon: <Mail className="w-5 h-5" />, href: "mailto:alaaaraydah50@gmail.com", testId: "button-email", external: false },
+                { label: "GitHub", icon: <SiGithub className="w-5 h-5" />, href: "https://github.com/AlaaAraydah3", testId: "button-github", external: true },
+                { label: "LinkedIn", icon: <Linkedin className="w-5 h-5" />, href: "https://linkedin.com/in/alaa-araydah-278849234", testId: "button-linkedin", external: true },
+                { label: "+962 77 043 9648", icon: <Phone className="w-5 h-5" />, href: "tel:+00962770439648", testId: "button-phone", external: false },
+              ].map((item, i) => (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.4 }}
+                  whileTap={{ scale: 0.97, backgroundColor: "hsl(var(--primary) / 0.15)", borderColor: "hsl(var(--primary))" }}
+                  data-testid={item.testId}
+                  className="flex items-center justify-center gap-3 py-5 px-4 rounded-xl border border-white/10 bg-card/60 font-semibold text-base text-foreground transition-all duration-300 hover:border-primary/40 hover:bg-primary/5 hover:text-primary cursor-pointer"
+                >
+                  {item.icon}
+                  {item.label}
+                </motion.a>
+              ))}
             </div>
           </motion.div>
         </section>
