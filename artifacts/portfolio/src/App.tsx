@@ -209,17 +209,18 @@ function ProjectCard({ project }: { project: Project }) {
     <motion.div
       whileTap={isComingSoon ? {} : { scale: 0.97, y: -6 }}
       onClick={() => { if (!isComingSoon) setClicked(c => !c); }}
-      className={`flex flex-col border rounded-xl transition-colors duration-300 cursor-pointer relative overflow-hidden group
+      style={clicked && !isComingSoon ? { backgroundColor: 'hsl(var(--primary))', borderColor: 'hsl(var(--primary))' } : {}}
+      className={`flex flex-col border rounded-xl transition-all duration-300 cursor-pointer relative overflow-hidden group
         ${isComingSoon
           ? "opacity-60 grayscale-[0.5] border-white/10 bg-card/80 cursor-default"
           : clicked
-            ? "border-primary bg-primary shadow-lg shadow-primary/40"
+            ? "shadow-lg"
             : "border-white/10 bg-card/80 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
         }`}
       data-testid={`card-project-${project.title}`}
     >
-      {!isComingSoon && (
-        <div className={`absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none transition-opacity duration-300 ${clicked ? "opacity-100" : "opacity-0 group-hover:opacity-60"}`} />
+      {!isComingSoon && !clicked && (
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       )}
 
       <div className="pb-4 relative z-10 p-6 pb-2">
