@@ -329,10 +329,9 @@ function Portfolio() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center border border-primary/20">
-              <Bot className="w-5 h-5 text-primary" />
+            <div className="w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center border border-primary/20">
+              <span className="font-mono font-bold text-primary text-base tracking-tight">AA</span>
             </div>
-            <span className="font-mono font-bold tracking-tight text-foreground text-lg">alaa<span className="text-primary">.dev</span></span>
           </div>
           
           <div className="hidden md:flex gap-8 text-sm font-medium">
@@ -411,14 +410,10 @@ function Portfolio() {
             
             <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1]">
               Alaa Araydah
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500 mt-2 text-4xl md:text-5xl">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500 mt-8 text-2xl md:text-3xl font-semibold tracking-wide">
                 AI/ML Engineering.
               </span>
             </motion.h1>
-            
-            <motion.p variants={itemVariants} className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-              Electronic Engineering graduate building expertise in applied Artificial Intelligence, Machine Learning, and Data Systems.
-            </motion.p>
             
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-4">
               <Button onClick={() => scrollTo("projects")} size="lg" className="h-12 px-6 gap-2 text-base shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)] transition-all" data-testid="button-view-projects">
@@ -470,100 +465,113 @@ function Portfolio() {
         </section>
 
         {/* PROJECTS SECTION */}
-        <section id="projects" className="scroll-m-24 space-y-12">
+        <section id="projects" className="scroll-m-24 space-y-10 flex flex-col items-center text-center">
+
+          {/* Category Grid — 2 / 2 / 1 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="w-full max-w-2xl"
           >
-            <h3 className="text-3xl font-bold tracking-tight mb-2">Selected Projects</h3>
-            <div className="h-1 w-12 bg-primary rounded-full mb-4" />
-            <p className="text-muted-foreground">A timeline of my technical work, organized by program track.</p>
-          </motion.div>
+            <div className="grid grid-cols-2 gap-4">
+              {projectCategories.slice(0, 4).map((cat, i) => {
+                const isActive = openCategory === cat.category;
+                return (
+                  <motion.button
+                    key={cat.category}
+                    onClick={() => setOpenCategory(isActive ? null : cat.category)}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08, duration: 0.4 }}
+                    whileTap={{ scale: 0.97 }}
+                    className={`relative py-6 px-4 rounded-xl border font-semibold text-lg tracking-tight transition-all duration-300 overflow-hidden
+                      ${isActive
+                        ? "border-primary text-primary bg-primary/10 shadow-[0_0_24px_rgba(20,184,166,0.2)]"
+                        : "border-white/10 bg-card/60 text-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                      }`}
+                    data-testid={`category-tab-${cat.category}`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="catHighlight"
+                        className="absolute inset-0 bg-primary/5 rounded-xl pointer-events-none"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                    {cat.category}
+                  </motion.button>
+                );
+              })}
 
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 relative">
-            {/* Sidebar Tabs */}
-            <div className="lg:w-1/3 flex-shrink-0">
-              <div className="flex overflow-x-auto lg:flex-col gap-3 pb-4 lg:pb-0 lg:sticky lg:top-32 no-scrollbar">
-                {projectCategories.map((cat) => {
+              {/* 5th item — centered across full row */}
+              <div className="col-span-2 flex justify-center">
+                {(() => {
+                  const cat = projectCategories[4];
                   const isActive = openCategory === cat.category;
                   return (
-                    <button
+                    <motion.button
                       key={cat.category}
-                      onClick={() => setOpenCategory(cat.category)}
-                      className={`relative flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-300 min-w-[260px] lg:min-w-0 flex-shrink-0 border ${
-                        isActive 
-                          ? 'bg-primary/5 text-primary border-primary/30 shadow-[0_0_20px_rgba(20,184,166,0.1)] lg:shadow-[inset_4px_0_0_0_hsl(var(--primary))]' 
-                          : 'bg-card/40 border-white/5 hover:border-white/10 hover:bg-white/5 text-muted-foreground hover:text-foreground'
-                      }`}
+                      onClick={() => setOpenCategory(isActive ? null : cat.category)}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.32, duration: 0.4 }}
+                      whileTap={{ scale: 0.97 }}
+                      style={{ width: "calc(50% - 8px)" }}
+                      className={`relative py-6 px-4 rounded-xl border font-semibold text-lg tracking-tight transition-all duration-300 overflow-hidden
+                        ${isActive
+                          ? "border-primary text-primary bg-primary/10 shadow-[0_0_24px_rgba(20,184,166,0.2)]"
+                          : "border-white/10 bg-card/60 text-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                        }`}
                       data-testid={`category-tab-${cat.category}`}
                     >
-                      <div className={`p-2.5 rounded-lg transition-colors ${isActive ? 'bg-primary/20 text-primary shadow-[0_0_15px_rgba(20,184,166,0.3)]' : 'bg-white/5 text-muted-foreground'}`}>
-                        {cat.icon}
-                      </div>
-                      <span className="font-semibold text-lg tracking-tight whitespace-nowrap">{cat.category}</span>
-                      
                       {isActive && (
                         <motion.div
-                          layoutId="activeTabIndicator"
-                          className="absolute inset-0 rounded-xl bg-primary/5 pointer-events-none"
-                          initial={false}
+                          layoutId="catHighlight"
+                          className="absolute inset-0 bg-primary/5 rounded-xl pointer-events-none"
                           transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         />
                       )}
-                    </button>
+                      {cat.category}
+                    </motion.button>
                   );
-                })}
+                })()}
               </div>
             </div>
+          </motion.div>
 
-            {/* Content Area */}
-            <div className="lg:w-2/3 min-h-[600px]">
-              <AnimatePresence mode="wait">
-                {projectCategories.map((cat) => {
-                  if (openCategory !== cat.category) return null;
-                  return (
-                    <motion.div
-                      key={cat.category}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="space-y-10"
-                    >
-                      <div className="hidden lg:flex items-center gap-4 mb-8">
-                        <div className="p-3 rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-[0_0_20px_rgba(20,184,166,0.15)]">
-                          {cat.icon}
-                        </div>
-                        <h4 className="text-3xl font-extrabold tracking-tight text-foreground">{cat.category}</h4>
-                      </div>
-
-                      {cat.subcategories.map((sub, idx) => (
-                        <motion.div 
-                          key={sub.subtitle}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: idx * 0.1 + 0.1, duration: 0.4 }}
-                          className="space-y-6"
-                        >
-                          <h5 className="text-sm font-mono font-semibold text-primary uppercase tracking-widest flex items-center gap-4">
-                            <span className="w-8 h-[1px] bg-primary/50" />
-                            <span>{sub.subtitle}</span>
-                            <span className="h-[1px] flex-1 bg-white/5" />
-                          </h5>
-                          
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {sub.projects.map((project) => (
-                              <ProjectCard key={project.title} project={project} />
-                            ))}
-                          </div>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            </div>
+          {/* Projects for active category */}
+          <div className="w-full">
+            <AnimatePresence mode="wait">
+              {projectCategories.map((cat) => {
+                if (openCategory !== cat.category) return null;
+                const allProjects = cat.subcategories.flatMap(sub => sub.projects);
+                return (
+                  <motion.div
+                    key={cat.category}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left"
+                  >
+                    {allProjects.map((project, idx) => (
+                      <motion.div
+                        key={project.title}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.07, duration: 0.35 }}
+                      >
+                        <ProjectCard project={project} />
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         </section>
 
