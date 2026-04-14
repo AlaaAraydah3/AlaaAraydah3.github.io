@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SiGithub } from "react-icons/si";
-import { Mail, ChevronRight, Code2, Database, Box, Server, Bot, ExternalLink, Linkedin, Menu, X, ArrowRight } from "lucide-react";
+import { Mail, ChevronRight, Code2, Database, Box, Server, Bot, ExternalLink, Linkedin, Menu, X, ArrowRight, Phone } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -563,6 +563,12 @@ function Portfolio() {
                 <a href="https://linkedin.com/in/alaa-araydah-278849234" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="w-5 h-5" />
                   LinkedIn
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="h-14 px-8 gap-3 text-base border-white/10 hover:bg-white/5" data-testid="button-phone">
+                <a href="tel:+00962770439648">
+                  <Phone className="w-5 h-5" />
+                  +962 77 043 9648
                 </a>
               </Button>
             </div>
