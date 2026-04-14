@@ -213,7 +213,7 @@ function ProjectCard({ project }: { project: Project }) {
         ${isComingSoon
           ? "opacity-60 grayscale-[0.5] border-white/10 bg-card/80 cursor-default"
           : clicked
-            ? "border-primary/60 bg-primary/15 shadow-lg shadow-primary/20"
+            ? "border-primary bg-primary shadow-lg shadow-primary/40"
             : "border-white/10 bg-card/80 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
         }`}
       data-testid={`card-project-${project.title}`}
@@ -223,10 +223,10 @@ function ProjectCard({ project }: { project: Project }) {
       )}
 
       <div className="pb-4 relative z-10 p-6 pb-2">
-        <div className={`text-base font-semibold mb-2 ${isComingSoon ? "text-muted-foreground font-medium" : "text-foreground"}`}>
+        <div className={`text-base font-semibold mb-2 ${isComingSoon ? "text-muted-foreground font-medium" : clicked ? "text-white" : "text-foreground"}`}>
           {project.title}
         </div>
-        <div className="text-sm leading-relaxed text-muted-foreground/80 min-h-[3rem]">
+        <div className={`text-sm leading-relaxed min-h-[3rem] ${clicked ? "text-white/80" : "text-muted-foreground/80"}`}>
           {project.description}
         </div>
       </div>
@@ -237,7 +237,7 @@ function ProjectCard({ project }: { project: Project }) {
             <Badge
               key={tag}
               variant="secondary"
-              className={`font-mono text-xs font-normal py-1 ${isComingSoon ? "bg-white/5 text-muted-foreground" : clicked ? "bg-primary/20 text-primary border-primary/30" : "bg-primary/10 text-primary border-primary/20"}`}
+              className={`font-mono text-xs font-normal py-1 ${isComingSoon ? "bg-white/5 text-muted-foreground" : clicked ? "bg-white/20 text-white border-white/30" : "bg-primary/10 text-primary border-primary/20"}`}
               data-testid={`badge-tag-${tag}`}
             >
               {tag}
@@ -253,7 +253,7 @@ function ProjectCard({ project }: { project: Project }) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={e => e.stopPropagation()}
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-2 group/link"
+            className={`text-sm font-medium transition-colors inline-flex items-center gap-2 group/link ${clicked ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"}`}
             data-testid={`link-github-${project.title}`}
           >
             <SiGithub className="w-4 h-4" />
