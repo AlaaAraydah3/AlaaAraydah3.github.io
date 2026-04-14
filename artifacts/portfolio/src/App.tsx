@@ -481,65 +481,89 @@ function Portfolio() {
             <p className="text-muted-foreground">A timeline of my technical work, organized by program track.</p>
           </motion.div>
 
-          <div className="space-y-6">
-            {projectCategories.map((cat, catIndex) => (
-              <motion.div
-                key={cat.category}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: catIndex * 0.1, duration: 0.5 }}
-                className={`rounded-xl overflow-hidden border ${openCategory === cat.category ? 'border-primary/50 shadow-[0_0_30px_rgba(20,184,166,0.1)]' : 'border-white/10'} bg-card/50 backdrop-blur-sm transition-all duration-300`}
-              >
-                <button
-                  onClick={() => setOpenCategory(openCategory === cat.category ? null : cat.category)}
-                  className="w-full flex items-center justify-between px-6 py-5 hover:bg-white/5 transition-colors text-left group"
-                  data-testid={`category-toggle-${cat.category}`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`p-2.5 rounded-lg transition-colors ${openCategory === cat.category ? 'bg-primary/20' : 'bg-white/5 group-hover:bg-primary/10'}`}>
-                      {cat.icon}
-                    </div>
-                    <span className="font-semibold text-xl text-foreground tracking-tight">{cat.category}</span>
-                  </div>
-                  <motion.div
-                    animate={{ rotate: openCategory === cat.category ? 90 : 0 }}
-                    transition={{ duration: 0.2 }}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center ${openCategory === cat.category ? 'bg-white/10' : ''}`}
-                  >
-                    <ChevronRight className={`w-5 h-5 ${openCategory === cat.category ? 'text-primary' : 'text-muted-foreground'}`} />
-                  </motion.div>
-                </button>
-
-                <AnimatePresence>
-                  {openCategory === cat.category && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 relative">
+            {/* Sidebar Tabs */}
+            <div className="lg:w-1/3 flex-shrink-0">
+              <div className="flex overflow-x-auto lg:flex-col gap-3 pb-4 lg:pb-0 lg:sticky lg:top-32 no-scrollbar">
+                {projectCategories.map((cat) => {
+                  const isActive = openCategory === cat.category;
+                  return (
+                    <button
+                      key={cat.category}
+                      onClick={() => setOpenCategory(cat.category)}
+                      className={`relative flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-300 min-w-[260px] lg:min-w-0 flex-shrink-0 border ${
+                        isActive 
+                          ? 'bg-primary/5 text-primary border-primary/30 shadow-[0_0_20px_rgba(20,184,166,0.1)] lg:shadow-[inset_4px_0_0_0_hsl(var(--primary))]' 
+                          : 'bg-card/40 border-white/5 hover:border-white/10 hover:bg-white/5 text-muted-foreground hover:text-foreground'
+                      }`}
+                      data-testid={`category-tab-${cat.category}`}
                     >
-                      <div className="border-t border-white/5 px-6 py-8 space-y-12 bg-black/20">
-                        {cat.subcategories.map((sub) => (
-                          <div key={sub.subtitle} className="space-y-6">
-                            <h5 className="text-sm font-mono font-semibold text-primary uppercase tracking-widest flex items-center gap-4">
-                              <span>{sub.subtitle}</span>
-                              <span className="h-[1px] flex-1 bg-white/5" />
-                            </h5>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                              {sub.projects.map((project) => (
-                                <ProjectCard key={project.title} project={project} />
-                              ))}
-                            </div>
-                          </div>
-                        ))}
+                      <div className={`p-2.5 rounded-lg transition-colors ${isActive ? 'bg-primary/20 text-primary shadow-[0_0_15px_rgba(20,184,166,0.3)]' : 'bg-white/5 text-muted-foreground'}`}>
+                        {cat.icon}
                       </div>
+                      <span className="font-semibold text-lg tracking-tight whitespace-nowrap">{cat.category}</span>
+                      
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeTabIndicator"
+                          className="absolute inset-0 rounded-xl bg-primary/5 pointer-events-none"
+                          initial={false}
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Content Area */}
+            <div className="lg:w-2/3 min-h-[600px]">
+              <AnimatePresence mode="wait">
+                {projectCategories.map((cat) => {
+                  if (openCategory !== cat.category) return null;
+                  return (
+                    <motion.div
+                      key={cat.category}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="space-y-10"
+                    >
+                      <div className="hidden lg:flex items-center gap-4 mb-8">
+                        <div className="p-3 rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-[0_0_20px_rgba(20,184,166,0.15)]">
+                          {cat.icon}
+                        </div>
+                        <h4 className="text-3xl font-extrabold tracking-tight text-foreground">{cat.category}</h4>
+                      </div>
+
+                      {cat.subcategories.map((sub, idx) => (
+                        <motion.div 
+                          key={sub.subtitle}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: idx * 0.1 + 0.1, duration: 0.4 }}
+                          className="space-y-6"
+                        >
+                          <h5 className="text-sm font-mono font-semibold text-primary uppercase tracking-widest flex items-center gap-4">
+                            <span className="w-8 h-[1px] bg-primary/50" />
+                            <span>{sub.subtitle}</span>
+                            <span className="h-[1px] flex-1 bg-white/5" />
+                          </h5>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {sub.projects.map((project) => (
+                              <ProjectCard key={project.title} project={project} />
+                            ))}
+                          </div>
+                        </motion.div>
+                      ))}
                     </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
+                  );
+                })}
+              </AnimatePresence>
+            </div>
           </div>
         </section>
 
