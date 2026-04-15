@@ -427,38 +427,53 @@ function Portfolio() {
         </section>
 
         {/* ABOUT SECTION */}
-        <section id="about" className="scroll-m-24 relative">
+        <section id="about" className="scroll-m-24">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="flex flex-col md:flex-row gap-12 items-start"
+            className="border border-white/10 rounded-2xl bg-card/40 backdrop-blur-sm p-8 md:p-12 space-y-10 text-center"
           >
-            <div className="md:w-1/3">
-              <h3 className="text-3xl font-bold tracking-tight mb-2">About Me</h3>
-              <div className="h-1 w-12 bg-primary rounded-full" />
+            {/* Title */}
+            <div className="space-y-2">
+              <h3 className="text-3xl font-bold tracking-tight">About Me</h3>
+              <div className="h-1 w-12 bg-primary rounded-full mx-auto" />
             </div>
-            
-            <div className="md:w-2/3 space-y-8">
-              <div className="space-y-6 text-muted-foreground leading-relaxed text-lg border-l-2 border-white/10 pl-6">
-                <p>
-                  I am a recent graduate in Electronic Engineering from Yarmouk University in Jordan. I am building expertise in applied AI and ML systems through the AI.SPIRE program.
-                </p>
-                <p>
-                  I am most interested in NLP, computer vision, and data engineering — areas where thoughtful systems design meets real-world impact. This portfolio tracks my learning journey and the projects I have built along the way.
-                </p>
-              </div>
 
-              <div className="space-y-3 pt-4">
-                <h4 className="text-sm font-mono text-foreground font-semibold uppercase tracking-wider">Core Interests</h4>
-                <div className="flex flex-wrap gap-2">
-                  {["Natural Language Processing", "Computer Vision", "Data Engineering", "Machine Learning", "System Design"].map(interest => (
-                    <span key={interest} className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-foreground hover:border-primary/50 transition-colors cursor-default">
-                      {interest}
-                    </span>
-                  ))}
+            {/* Bio */}
+            <div className="max-w-2xl mx-auto space-y-4 text-muted-foreground leading-relaxed text-lg">
+              <p>
+                Recent Electronic Engineering graduate from Yarmouk University, Jordan, building expertise in applied AI and ML through the <span className="text-primary font-medium">AI.SPIRE</span> program.
+              </p>
+              <p>
+                Focused on NLP, computer vision, and data engineering — areas where thoughtful systems design meets real-world impact.
+              </p>
+            </div>
+
+            {/* Stats row */}
+            <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
+              {[
+                { value: "8+", label: "Projects" },
+                { value: "AI.SPIRE", label: "Program" },
+                { value: "Jordan", label: "Based in" },
+              ].map((stat) => (
+                <div key={stat.label} className="border border-white/10 rounded-xl py-4 px-3 bg-white/3 hover:border-primary/30 transition-colors">
+                  <div className="text-xl font-bold text-primary">{stat.value}</div>
+                  <div className="text-xs text-muted-foreground font-mono mt-1 uppercase tracking-wider">{stat.label}</div>
                 </div>
+              ))}
+            </div>
+
+            {/* Core interests */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono text-muted-foreground font-semibold uppercase tracking-widest">Core Interests</h4>
+              <div className="flex flex-wrap justify-center gap-2">
+                {["Natural Language Processing", "Computer Vision", "Data Engineering", "Machine Learning", "System Design"].map(interest => (
+                  <span key={interest} className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-foreground hover:border-primary/40 hover:text-primary transition-colors cursor-default">
+                    {interest}
+                  </span>
+                ))}
               </div>
             </div>
           </motion.div>
@@ -530,7 +545,7 @@ function Portfolio() {
                         <div className="border-t border-white/5 p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
                           {allProjects.map((project, idx) => (
                             <motion.div
-                              key={project.title}
+                              key={`${project.title}-${idx}`}
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: idx * 0.06, duration: 0.3 }}
