@@ -477,115 +477,75 @@ function Portfolio() {
             <h3 className="text-3xl font-bold tracking-tight">Projects</h3>
             <div className="h-1 w-12 bg-primary rounded-full mx-auto" />
           </div>
-        <div className="space-y-10 flex flex-col items-center text-center">
-
-          {/* Category Grid — 2 / 2 / 1 */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="w-full max-w-2xl"
-          >
-            <div className="grid grid-cols-2 gap-4">
-              {projectCategories.slice(0, 4).map((cat, i) => {
-                const isActive = openCategory === cat.category;
-                return (
+          {/* Accordion categories — each expands to show its projects */}
+          <div className="space-y-3">
+            {projectCategories.map((cat, i) => {
+              const isOpen = openCategory === cat.category;
+              const allProjects = cat.subcategories.flatMap(sub => sub.projects);
+              return (
+                <motion.div
+                  key={cat.category}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.07, duration: 0.4 }}
+                  className={`rounded-xl border overflow-hidden transition-colors duration-300 ${
+                    isOpen ? "border-primary/50 shadow-[0_0_24px_rgba(20,184,166,0.12)]" : "border-white/10"
+                  } bg-card/60`}
+                >
+                  {/* Category header / toggle */}
                   <motion.button
-                    key={cat.category}
-                    onClick={() => setOpenCategory(isActive ? null : cat.category)}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.08, duration: 0.4 }}
-                    whileTap={{ scale: 0.97 }}
-                    className={`relative py-6 px-4 rounded-xl border font-semibold text-lg tracking-tight transition-all duration-300 overflow-hidden
-                      ${isActive
-                        ? "border-primary text-primary bg-primary/10 shadow-[0_0_24px_rgba(20,184,166,0.2)]"
-                        : "border-white/10 bg-card/60 text-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
-                      }`}
+                    onClick={() => setOpenCategory(isOpen ? null : cat.category)}
+                    whileTap={{ scale: 0.99 }}
+                    className={`w-full flex items-center justify-between px-6 py-5 text-left transition-colors duration-300 ${
+                      isOpen ? "bg-primary/5 text-primary" : "hover:bg-white/5 text-foreground hover:text-primary"
+                    }`}
                     data-testid={`category-tab-${cat.category}`}
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="catHighlight"
-                        className="absolute inset-0 bg-primary/5 rounded-xl pointer-events-none"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                      />
-                    )}
-                    {cat.category}
-                  </motion.button>
-                );
-              })}
-
-              {/* 5th item — centered across full row */}
-              <div className="col-span-2 flex justify-center">
-                {(() => {
-                  const cat = projectCategories[4];
-                  const isActive = openCategory === cat.category;
-                  return (
-                    <motion.button
-                      key={cat.category}
-                      onClick={() => setOpenCategory(isActive ? null : cat.category)}
-                      initial={{ opacity: 0, y: 16 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.32, duration: 0.4 }}
-                      whileTap={{ scale: 0.97 }}
-                      style={{ width: "calc(50% - 8px)" }}
-                      className={`relative py-6 px-4 rounded-xl border font-semibold text-lg tracking-tight transition-all duration-300 overflow-hidden
-                        ${isActive
-                          ? "border-primary text-primary bg-primary/10 shadow-[0_0_24px_rgba(20,184,166,0.2)]"
-                          : "border-white/10 bg-card/60 text-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
-                        }`}
-                      data-testid={`category-tab-${cat.category}`}
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg transition-colors ${isOpen ? "bg-primary/20" : "bg-white/5"}`}>
+                        {cat.icon}
+                      </div>
+                      <span className="font-semibold text-lg tracking-tight">{cat.category}</span>
+                    </div>
+                    <motion.div
+                      animate={{ rotate: isOpen ? 90 : 0 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      {isActive && (
-                        <motion.div
-                          layoutId="catHighlight"
-                          className="absolute inset-0 bg-primary/5 rounded-xl pointer-events-none"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
-                      )}
-                      {cat.category}
-                    </motion.button>
-                  );
-                })()}
-              </div>
-            </div>
-          </motion.div>
+                      <ChevronRight className={`w-5 h-5 ${isOpen ? "text-primary" : "text-muted-foreground"}`} />
+                    </motion.div>
+                  </motion.button>
 
-          {/* Projects for active category */}
-          <div className="w-full">
-            <AnimatePresence mode="wait">
-              {projectCategories.map((cat) => {
-                if (openCategory !== cat.category) return null;
-                const allProjects = cat.subcategories.flatMap(sub => sub.projects);
-                return (
-                  <motion.div
-                    key={cat.category}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -16 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left"
-                  >
-                    {allProjects.map((project, idx) => (
+                  {/* Expandable project cards */}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
                       <motion.div
-                        key={project.title}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.07, duration: 0.35 }}
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: "easeInOut" }}
+                        style={{ overflow: "hidden" }}
                       >
-                        <ProjectCard project={project} />
+                        <div className="border-t border-white/5 p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+                          {allProjects.map((project, idx) => (
+                            <motion.div
+                              key={project.title}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: idx * 0.06, duration: 0.3 }}
+                            >
+                              <ProjectCard project={project} />
+                            </motion.div>
+                          ))}
+                        </div>
                       </motion.div>
-                    ))}
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </div>
-        </div>
         </motion.div>
         </section>
 
