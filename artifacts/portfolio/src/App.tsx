@@ -563,7 +563,7 @@ function Portfolio() {
               <div className="h-1 w-12 bg-primary rounded-full mx-auto" />
             </div>
 
-            <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 { label: "Email Me", icon: <Mail className="w-5 h-5" />, href: "mailto:alaaaraydah50@gmail.com", testId: "button-email", external: false },
                 { label: "GitHub", icon: <SiGithub className="w-5 h-5" />, href: "https://github.com/AlaaAraydah3", testId: "button-github", external: true },
